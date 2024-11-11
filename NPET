@@ -1,0 +1,44 @@
+#include <stdio.h>
+
+int main() {
+    int analise = 0, design = 0, implementacao = 0, testes = 0, manutencao = 0;
+    int progresso = 0;
+
+    printf("\nSimulação do Fluxo de Desenvolvimento do Projeto NPET \n");
+
+    while (analise < 100 || design < 100 || implementacao < 100 || testes < 100 || manutencao < 100) {
+        printf("\nProgresso atual:\n");
+        printf("1. Análise: %d%%\n", analise);
+        printf("2. Design: %d%%\n", design);
+        printf("3. Implementação: %d%%\n", implementacao);
+        printf("4. Testes: %d%%\n", testes);
+        printf("5. Manutenção: %d%%\n", manutencao);
+
+        int opcao;
+        printf("\nEscolha uma etapa para atualizar o progresso (1-5): ");
+        scanf("%d", &opcao);
+
+        if (opcao < 1 || opcao > 5) {
+            printf("\nOpção inválida. Tente novamente.");
+            continue;
+        }
+
+        printf("Informe o progresso (0-100) para a etapa escolhida: ");
+        scanf("%d", &progresso);
+
+        if (progresso < 0 || progresso > 100) {
+            printf("\nProgresso inválido. Tente novamente.");
+            continue;
+        }
+        switch (opcao) {
+            case 1: analise = progresso; break;
+            case 2: design = progresso; break;
+            case 3: implementacao = progresso; break;
+            case 4: testes = progresso; break;
+            case 5: manutencao = progresso; break;
+        }
+    }
+
+    printf("\nParabéns! Todas as etapas do desenvolvimento do projeto NPET foram concluídas.\n");
+    return 0;
+}
