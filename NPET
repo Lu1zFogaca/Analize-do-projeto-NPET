@@ -1,35 +1,79 @@
+
 #include <stdio.h>
+
+#define MAX_COMENTARIO 200
+void exibirProgresso(int analise, int design, int implementacao, int testes, int manutencao) {
+    printf("\nProgresso atual:\n");
+    printf("1. Análise: [");
+    for (int i = 0; i < 10; i++) {
+        printf(i < analise / 10 ? "#" : " ");
+    }
+    printf("] %d%%\n", analise);
+
+    printf("2. Design: [");
+    for (int i = 0; i < 10; i++) {
+        printf(i < design / 10 ? "#" : " ");
+    }
+    printf("] %d%%\n", design);
+
+    printf("3. Implementação: [");
+    for (int i = 0; i < 10; i++) {
+        printf(i < implementacao / 10 ? "#" : " ");
+    }
+    printf("] %d%%\n", implementacao);
+
+    printf("4. Testes: [");
+    for (int i = 0; i < 10; i++) {
+        printf(i < testes / 10 ? "#" : " ");
+    }
+    printf("] %d%%\n", testes);
+
+    printf("5. Manutenção: [");
+    for (int i = 0; i < 10; i++) {
+        printf(i < manutencao / 10 ? "#" : " ");
+    }
+    printf("] %d%%\n", manutencao);
+}
+
+int validarProgresso(int progresso) {
+    while (progresso < 0 || progresso > 100) {
+        printf("Progresso inválido. Informe um valor entre 0 e 100: ");
+        scanf("%d", &progresso);
+    }
+    return progresso;
+}
+
+void capturarComentario(char *comentario) {
+    printf("\nInforme um comentário sobre o andamento do projeto (Máximo %d caracteres): ", MAX_COMENTARIO);
+    getchar(); 
+    fgets(comentario, MAX_COMENTARIO, stdin);
+}
 
 int main() {
     int analise = 0, design = 0, implementacao = 0, testes = 0, manutencao = 0;
-    int progresso = 0;
+    int progresso = 0, opcao;
+    char comentario[MAX_COMENTARIO];
 
-    printf("\nSimulação do Fluxo de Desenvolvimento do Projeto NPET \n");
+    printf("\nSimulação do Fluxo de Desenvolvimento do Projeto NPET\n");
 
     while (analise < 100 || design < 100 || implementacao < 100 || testes < 100 || manutencao < 100) {
-        printf("\nProgresso atual:\n");
-        printf("1. Análise: %d%%\n", analise);
-        printf("2. Design: %d%%\n", design);
-        printf("3. Implementação: %d%%\n", implementacao);
-        printf("4. Testes: %d%%\n", testes);
-        printf("5. Manutenção: %d%%\n", manutencao);
+        exibirProgresso(analise, design, implementacao, testes, manutencao);
 
-        int opcao;
         printf("\nEscolha uma etapa para atualizar o progresso (1-5): ");
-        scanf("%d", &opcao);
-
-        if (opcao < 1 || opcao > 5) {
-            printf("\nOpção inválida. Tente novamente.");
+        if (scanf("%d", &opcao) != 1 || opcao < 1 || opcao > 5) {
+            printf("\nOpção inválida. Tente novamente.\n");
+            while(getchar() != '\n'); 
             continue;
         }
 
         printf("Informe o progresso (0-100) para a etapa escolhida: ");
-        scanf("%d", &progresso);
-
-        if (progresso < 0 || progresso > 100) {
-            printf("\nProgresso inválido. Tente novamente.");
+        if (scanf("%d", &progresso) != 1) {
+            printf("\nEntrada inválida. Tente novamente.\n");
+            while(getchar() != '\n');
             continue;
         }
+
+        progresso = validarProgresso(progresso);
         switch (opcao) {
             case 1: analise = progresso; break;
             case 2: design = progresso; break;
@@ -37,8 +81,12 @@ int main() {
             case 4: testes = progresso; break;
             case 5: manutencao = progresso; break;
         }
+
+        capturarComentario(comentario);
+        printf("\nComentário sobre o andamento do projeto: %s\n", comentario);
     }
 
     printf("\nParabéns! Todas as etapas do desenvolvimento do projeto NPET foram concluídas.\n");
     return 0;
 }
+
